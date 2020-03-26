@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/navHome">
+
+    <fragment
+        android:id="@+id/navHome"
+        android:name="com.example.habits4.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/actionHabitsFragmentToEditHabitFragment"
+            app:destination="@id/editHabitFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popExitAnim="@android:anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navAbout"
+        android:name="com.example.habits4.ui.about.AboutFragment"
+        android:label="@string/menu_about"
+        tools:layout="@layout/fragment_about" />
+
+    <fragment
+        android:id="@+id/habitsFragment"
+        android:name="com.example.habits4.ui.home.habits.HabitsFragment"
+        android:label="fragment_habits_list"
+        tools:layout="@layout/fragment_habits_list" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/editHabitFragment"
+        android:name="com.example.habits4.ui.home.edit.EditHabitFragment"
+        android:label="@string/edit_habit" >
+        <argument
+            android:name="habitIndex"
+            app:argType="integer"
+            android:defaultValue="-1"/>
+        <argument
+            android:name="habit"
+            app:argType="com.example.habits4.ui.home.habits.Habit"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+    </fragment>
+</navigation>

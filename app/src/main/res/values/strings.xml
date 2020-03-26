@@ -1,0 +1,34 @@
+<resources>
+    <string name="nav_header_description">Habits Tracker</string>
+
+    <string name="app_name">Трекер привычек</string>
+    <string name="app_author">Автор: Пашков Евгений</string>
+    <string name="app_version">Версия 1.0.0</string>
+
+    <string name="action_settings">Настройки</string>
+
+    <string name="menu_home">Главная</string>
+    <string name="menu_about">О приложении</string>
+
+    <string name="home_second">Home Second</string>
+
+    <string name="priority_placeholder">Приоритет: %s</string>
+    <string name="type_placeholder">Тип привычки: %s</string>
+    <string name="rgb_placeholder">RGB(%d, %d, %d)</string>
+    <string name="hsv_placeholder">HSV(%d, %d, %d)</string>
+
+    <string name="edit_habit">Редактировать привычку</string>
+    <string name="run_amount">Количество выполнения</string>
+    <string name="periodicity">Периодичность</string>
+    <string name="useful">Полезная</string>
+    <string name="harmful">Вредная</string>
+    <string name="description">Описание</string>
+    <string name="name">Название</string>
+    <string-array name="habit_priorities">
+        <item>Низкий</item>
+        <item>Средний</item>
+        <item>Высокий</item>
+    </string-array>
+    <string name="harmful_habits">Вредные</string>
+    <string name="useful_habits">Полезные</string>
+</resources>
