@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.habits4.MainActivity
 import com.example.habits4.R
 import com.example.habits4.ui.home.habits.HabitsPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator

@@ -12,7 +12,6 @@ import androidx.navigation.NavController
 import com.example.habits4.ui.home.edit.EditHabitFragmentCallback
 import com.example.habits4.ui.home.habits.Habit
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_home.*
 
 
 class MainActivity : AppCompatActivity(), EditHabitFragmentCallback {

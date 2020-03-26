@@ -7,16 +7,12 @@ import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.core.graphics.drawable.toBitmap
-import androidx.fragment.app.findFragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.example.habits4.MainActivity
 import com.example.habits4.infrastructure.getHueGradient
 import com.example.habits4.ui.home.habits.Habit
 import com.example.habits4.R
-import com.example.habits4.ui.home.HomeFragment
 import kotlinx.android.synthetic.main.fragment_edit_habit.*
-import kotlin.concurrent.fixedRateTimer
 
 
 class EditHabitFragment : Fragment() {
@@ -160,7 +156,6 @@ class EditHabitFragment : Fragment() {
             newPeriodicity.text.toString().toInt(),
             habitColor
         )
-
 
         callback?.onHabitEdited(habitIndex, resultHabit)
         navController.popBackStack()
