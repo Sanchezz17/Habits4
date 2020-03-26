@@ -23,15 +23,13 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.let { activity ->
-            homeViewPager.adapter = HabitsPagerAdapter(this)
-            TabLayoutMediator(homeTabs, homeViewPager) { tab, position ->
-                tab.text = when (position) {
-                    0 -> getString(R.string.harmful_habits)
-                    else -> getString(R.string.useful_habits)
-                }
-            }.attach()
-        }
+        homeViewPager.adapter = HabitsPagerAdapter(this)
+        TabLayoutMediator(homeTabs, homeViewPager) { tab, position ->
+            tab.text = when (position) {
+                0 -> getString(R.string.harmful_habits)
+                else -> getString(R.string.useful_habits)
+            }
+        }.attach()
 
         addHabitButton.setOnClickListener {
             val action = HomeFragmentDirections.actionHabitsFragmentToEditHabitFragment()

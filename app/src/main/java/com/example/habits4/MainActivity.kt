@@ -53,12 +53,10 @@ class MainActivity : AppCompatActivity(), EditHabitFragmentCallback {
     }
 
     override fun onHabitEdited(habitIndex: Int, habit: Habit) {
-        Log.d("kek", "added privichka")
         if (habitIndex == -1) {
             habits.add(habit)
         } else {
             habits[habitIndex] = habit
         }
-        //homeViewPager.adapter?.notifyDataSetChanged()
     }
 }
