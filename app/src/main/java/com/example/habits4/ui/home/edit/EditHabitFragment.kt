@@ -13,14 +13,15 @@ import androidx.navigation.fragment.findNavController
 import com.example.habits4.infrastructure.getHueGradient
 import com.example.habits4.ui.home.habits.Habit
 import com.example.habits4.R
+import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.fragment_edit_habit.*
 
 
 class EditHabitFragment : Fragment() {
-    private val colorRectangles = mutableListOf<ImageButton>()
+    private val colorRectangles = mutableListOf<MaterialButton>()
     private var habitIndex: Int = 0
     private var habitColor: Int = Color.BLACK
-    private var habitRect: ImageButton? = null
+    private var habitRect: MaterialButton? = null
 
     private var callback: EditHabitFragmentCallback? = null
     private lateinit var navController: NavController
@@ -92,7 +93,7 @@ class EditHabitFragment : Fragment() {
         habitRect = colorRectangles.find {
             it.background.toBitmap(rectSize, rectSize).getPixel(0, 0) == habitColor
         }
-        habitRect?.setImageResource(R.drawable.done)
+        habitRect?.setIconResource(R.drawable.done)
     }
 
     private fun initializeColorRectangles() {
@@ -101,18 +102,21 @@ class EditHabitFragment : Fragment() {
         val layoutParams = LinearLayout.LayoutParams(rectSize, rectSize)
         layoutParams.setMargins(rectMargin, rectMargin, rectMargin, rectMargin)
         for (i in 1..16) {
-            val rect = ImageButton(context)
-            rect.layoutParams = layoutParams
-            rect.scaleType = ImageView.ScaleType.FIT_CENTER
-            colorScrollLayout.addView(rect)
-            colorRectangles.add(rect)
+            context?.let {
+                val rect = MaterialButton(it)
+                rect.layoutParams = layoutParams
+                rect.setStrokeColorResource(R.color.colorPrimaryDark)
+                rect.strokeWidth = resources.getDimension(R.dimen.rect_stroke_width).toInt()
+                colorScrollLayout.addView(rect)
+                colorRectangles.add(rect)
+            }
         }
 
         addColorToRectangles(colorRectangles, rectSize, rectMargin)
     }
 
     private fun addColorToRectangles(
-        colorRectangles: MutableList<ImageButton>,
+        colorRectangles: MutableList<MaterialButton>,
         rectSize: Int,
         rectMargin: Int
     ) {
@@ -131,11 +135,11 @@ class EditHabitFragment : Fragment() {
             rect.setBackgroundColor(centerColor)
             rect.setOnClickListener {
                 if (habitRect != null) {
-                    habitRect!!.setImageDrawable(null)
+                    habitRect!!.icon = null
                 }
                 habitColor = centerColor
+                rect.setIconResource(R.drawable.done)
                 habitRect = rect
-                rect.setImageResource(R.drawable.done)
             }
         }
     }

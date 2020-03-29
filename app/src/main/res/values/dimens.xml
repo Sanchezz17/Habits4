@@ -6,5 +6,6 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="rect_size">64dp</dimen>
     <dimen name="rect_margin">16dp</dimen>
+    <dimen name="rect_stroke_width">2dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 </resources>

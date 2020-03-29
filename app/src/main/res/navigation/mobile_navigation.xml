@@ -36,4 +36,9 @@
             app:destination="@id/navHome"
             app:popUpTo="@id/navHome" />
     </fragment>
+    <fragment
+        android:id="@+id/navAbout"
+        android:name="com.example.habits4.ui.about.AboutFragment"
+        android:label="@string/menu_about"
+        tools:layout="@layout/fragment_about" />
 </navigation>
