@@ -1,6 +1,7 @@
 package com.example.habits4.ui.home.edit
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
@@ -16,12 +17,14 @@ import kotlinx.android.synthetic.main.fragment_edit_habit.*
 
 
 class EditHabitFragment : Fragment() {
+    private val colorRectangles = mutableListOf<ImageButton>()
     private var habitIndex: Int = 0
     private var habitColor: Int = Color.BLACK
     private var habitRect: ImageButton? = null
 
     private var callback: EditHabitFragmentCallback? = null
-    lateinit var navController: NavController
+    private lateinit var navController: NavController
+    private lateinit var colorScrollBitmap: Bitmap
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -41,6 +44,9 @@ class EditHabitFragment : Fragment() {
 
         navController = findNavController()
 
+        colorScrollLayout.background = getHueGradient()
+        initializeColorRectangles()
+
         arguments?.let {
             val editHabitFragmentArgs = EditHabitFragmentArgs.fromBundle(it)
             habitIndex = editHabitFragmentArgs.habitIndex
@@ -48,8 +54,6 @@ class EditHabitFragment : Fragment() {
                 restoreHabitState(editHabitFragmentArgs.habit)
             }
         }
-        colorScrollLayout.background = getHueGradient()
-        addRectangles()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -82,10 +86,16 @@ class EditHabitFragment : Fragment() {
 
         newRunAmount.setText(habit.runAmount.toString())
         newPeriodicity.setText(habit.periodicity.toString())
+
+        habitColor = habit.color
+        val rectSize = resources.getDimension(R.dimen.rect_size).toInt()
+        habitRect = colorRectangles.find {
+            it.background.toBitmap(rectSize, rectSize).getPixel(0, 0) == habitColor
+        }
+        habitRect?.setImageResource(R.drawable.done)
     }
 
-    private fun addRectangles() {
-        val rectangles = mutableListOf<ImageButton>()
+    private fun initializeColorRectangles() {
         val rectSize = resources.getDimension(R.dimen.rect_size).toInt()
         val rectMargin = resources.getDimension(R.dimen.rect_margin).toInt()
         val layoutParams = LinearLayout.LayoutParams(rectSize, rectSize)
@@ -95,14 +105,14 @@ class EditHabitFragment : Fragment() {
             rect.layoutParams = layoutParams
             rect.scaleType = ImageView.ScaleType.FIT_CENTER
             colorScrollLayout.addView(rect)
-            rectangles.add(rect)
+            colorRectangles.add(rect)
         }
 
-        addColorToRectangles(rectangles, rectSize, rectMargin)
+        addColorToRectangles(colorRectangles, rectSize, rectMargin)
     }
 
     private fun addColorToRectangles(
-        rectangles: MutableList<ImageButton>,
+        colorRectangles: MutableList<ImageButton>,
         rectSize: Int,
         rectMargin: Int
     ) {
@@ -110,12 +120,12 @@ class EditHabitFragment : Fragment() {
             LinearLayout.LayoutParams.WRAP_CONTENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
-        val bitmap = colorScrollLayout.background.toBitmap(
+        colorScrollBitmap = colorScrollLayout.background.toBitmap(
             colorScroll.measuredWidth,
             colorScroll.measuredHeight
         )
-        rectangles.forEachIndexed { index, rect ->
-            val centerColor = bitmap.getPixel(
+        colorRectangles.forEachIndexed { index, rect ->
+            val centerColor = colorScrollBitmap.getPixel(
                 index * (rectSize + 2 * rectMargin) + rectSize / 2, rectMargin + rectSize / 2
             )
             rect.setBackgroundColor(centerColor)
@@ -158,7 +168,7 @@ class EditHabitFragment : Fragment() {
         )
 
         callback?.onHabitEdited(habitIndex, resultHabit)
-        navController.popBackStack()
+        navController.navigate(R.id.actionEditHabitFragmentToNavHome)
     }
 }
 

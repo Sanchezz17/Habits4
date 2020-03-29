@@ -19,19 +19,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navAbout"
-        android:name="com.example.habits4.ui.about.AboutFragment"
-        android:label="@string/menu_about"
-        tools:layout="@layout/fragment_about" />
-
-    <fragment
-        android:id="@+id/habitsFragment"
-        android:name="com.example.habits4.ui.home.habits.HabitsFragment"
-        android:label="fragment_habits_list"
-        tools:layout="@layout/fragment_habits_list" >
-    </fragment>
-
-    <fragment
         android:id="@+id/editHabitFragment"
         android:name="com.example.habits4.ui.home.edit.EditHabitFragment"
         android:label="@string/edit_habit" >
@@ -44,5 +31,9 @@
             app:argType="com.example.habits4.ui.home.habits.Habit"
             app:nullable="true"
             android:defaultValue="@null"/>
+        <action
+            android:id="@+id/actionEditHabitFragmentToNavHome"
+            app:destination="@id/navHome"
+            app:popUpTo="@id/navHome" />
     </fragment>
 </navigation>
