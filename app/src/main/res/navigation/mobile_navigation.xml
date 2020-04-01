@@ -23,18 +23,9 @@
         android:name="com.example.habits4.ui.home.edit.EditHabitFragment"
         android:label="@string/edit_habit" >
         <argument
-            android:name="habitIndex"
+            android:name="habitId"
             app:argType="integer"
             android:defaultValue="-1"/>
-        <argument
-            android:name="habit"
-            app:argType="com.example.habits4.ui.home.habits.Habit"
-            app:nullable="true"
-            android:defaultValue="@null"/>
-        <action
-            android:id="@+id/actionEditHabitFragmentToNavHome"
-            app:destination="@id/navHome"
-            app:popUpTo="@id/navHome" />
     </fragment>
     <fragment
         android:id="@+id/navAbout"

@@ -1,20 +1,23 @@
-package com.example.habits4.ui.home.habits
+package com.example.habits4.ui.home.habits.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.RecyclerView
-import com.example.habits4.MainActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.habits4.R
 import com.example.habits4.infrastructure.OnItemClickListener
 import com.example.habits4.infrastructure.addOnItemClickListener
 import com.example.habits4.ui.home.HomeFragmentDirections
+import com.example.habits4.ui.home.habits.Habit
+import com.example.habits4.ui.home.habits.HabitsViewModel
 import kotlinx.android.synthetic.main.fragment_habits_list.*
 
 
@@ -29,8 +32,17 @@ class HabitsFragment : Fragment() {
     }
 
     var habitsType: String = ""
-    private lateinit var recyclerView: RecyclerView
     lateinit var navController: NavController
+    lateinit var viewModel: HabitsViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                return HabitsViewModel { habit: Habit -> habit.habitType == habitsType } as T
+            }
+        }).get(HabitsViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,31 +55,36 @@ class HabitsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController = findNavController()
 
-        recyclerView = habitsRecyclerView.apply {
-            val allHabits = (activity as MainActivity).habits
-            val filteredHabits = allHabits
-                .filter { it.habitType == habitsType }
+        viewModel.habits.observe(viewLifecycleOwner, Observer { habits ->
+            initializeRecyclerView(habits)
+        })
+    }
+
+    private fun initializeRecyclerView(filteredHabits: List<Habit>) {
+        habitsRecyclerView.apply {
             adapter = HabitsRecycleViewAdapter(filteredHabits)
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(
-                DividerItemDecoration(
-                    context,
-                    LinearLayoutManager.VERTICAL
-                )
+                DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
             )
             addOnItemClickListener(object : OnItemClickListener {
                 override fun onItemClicked(position: Int, view: View) {
-                    val allHabits = (activity as MainActivity).habits
-                    val filteredHabits = allHabits
-                        .filter { it.habitType == habitsType }
                     val habit = filteredHabits[position]
-                    val positionInWholeList = allHabits.indexOf(habit)
                     val action = HomeFragmentDirections.actionHabitsFragmentToEditHabitFragment(
-                        positionInWholeList, habit
+                        habit.id
                     )
                     navController.navigate(action)
                 }
             })
+        }
+        habitsRecyclerView.addOnLayoutChangeListener { view, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+            if (bottom > oldBottom) {
+                habitsRecyclerView.post {
+                    habitsRecyclerView.scrollToPosition(
+                        habitsRecyclerView.adapter!!.itemCount - 1
+                    )
+                }
+            }
         }
     }
 }

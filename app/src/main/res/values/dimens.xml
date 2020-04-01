@@ -7,5 +7,10 @@
     <dimen name="rect_size">64dp</dimen>
     <dimen name="rect_margin">16dp</dimen>
     <dimen name="rect_stroke_width">2dp</dimen>
+    <dimen name="rect_icon_padding">2dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="habit_margin">8dp</dimen>
+    <dimen name="habit_attrs_margin">10dp</dimen>
+    <dimen name="edit_habit_base_height">42dp</dimen>
+    <dimen name="edit_habit_radio_button_height">30dp</dimen>
 </resources>

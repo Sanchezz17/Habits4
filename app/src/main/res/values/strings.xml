@@ -12,6 +12,7 @@
 
     <string name="home_second">Home Second</string>
 
+    <string name="priority">Приоритет: </string>
     <string name="priority_placeholder">Приоритет: %s</string>
     <string name="type_placeholder">Тип привычки: %s</string>
     <string name="rgb_placeholder">RGB(%d, %d, %d)</string>
@@ -31,4 +32,8 @@
     </string-array>
     <string name="harmful_habits">Вредные</string>
     <string name="useful_habits">Полезные</string>
+    <string name="edit_habit_not_filled_toast">Пожалуйста, заполните все поля</string>
+    <string name="filters">Фильтры и сортировки</string>
+    <string name="find_by_name">Найти по названию</string>
+    <string name="sort_by_edit_date">Сортировать по времени редактирования</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.habits4.ui.home.habits
+package com.example.habits4.ui.home.habits.view
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter

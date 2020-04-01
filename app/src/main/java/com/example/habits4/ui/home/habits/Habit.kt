@@ -4,8 +4,10 @@ import android.graphics.Color
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
+
 @Parcelize
 class Habit(
+    var id: Int,
     val name: String,
     val description: String,
     val priority: String,

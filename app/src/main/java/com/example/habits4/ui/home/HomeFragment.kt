@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.habits4.R
-import com.example.habits4.ui.home.habits.HabitsPagerAdapter
+import com.example.habits4.ui.home.habits.view.HabitsPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.android.synthetic.main.bottom_sheet.*
 import kotlinx.android.synthetic.main.fragment_home.*
+
 
 class HomeFragment : Fragment() {
 
@@ -23,7 +25,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        homeViewPager.adapter = HabitsPagerAdapter(this)
+        homeViewPager.adapter =
+            HabitsPagerAdapter(this)
         TabLayoutMediator(homeTabs, homeViewPager) { tab, position ->
             tab.text = when (position) {
                 0 -> getString(R.string.harmful_habits)

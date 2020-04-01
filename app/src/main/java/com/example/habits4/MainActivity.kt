@@ -8,18 +8,11 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import com.example.habits4.ui.home.edit.EditHabitFragmentCallback
-import com.example.habits4.ui.home.habits.Habit
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.app_bar.*
 
 
-class MainActivity : AppCompatActivity(), EditHabitFragmentCallback {
-    companion object {
-        const val HABITS_KEY: String = "habits"
-    }
-
-    var habits = arrayListOf<Habit>()
-
+class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
 
@@ -37,25 +30,7 @@ class MainActivity : AppCompatActivity(), EditHabitFragmentCallback {
         navView.setupWithNavController(navController)
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putParcelableArrayList(HABITS_KEY, habits)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        habits = savedInstanceState.getParcelableArrayList<Habit>(HABITS_KEY) ?: arrayListOf()
-    }
-
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }
-
-    override fun onHabitEdited(habitIndex: Int, habit: Habit) {
-        if (habitIndex == -1) {
-            habits.add(habit)
-        } else {
-            habits[habitIndex] = habit
-        }
     }
 }

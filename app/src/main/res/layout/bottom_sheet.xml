@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="82dp"
+    app:layout_behavior="@string/bottom_sheet_behavior">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addHabitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/secondary_text_light"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="40dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_habit_base_height"
+            android:background="#474B4C"
+            android:gravity="center"
+            android:text="@string/filters"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@android:color/white" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_habit_base_height"
+            android:hint="@string/find_by_name"
+            android:layout_margin="@dimen/habit_attrs_margin"
+            android:autofillHints=""
+            android:inputType="text"
+            android:textColorHint="@android:color/tertiary_text_light"
+            android:textColor="@android:color/white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_habit_base_height"
+            android:layout_margin="@dimen/habit_attrs_margin" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/sort_by_edit_date"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@android:color/white"/>
+
+            <ImageButton
+                android:id="@+id/sort_by_date_asc"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_margin="2dp"
+                android:background="@android:drawable/ic_menu_upload" />
+
+            <ImageButton
+                android:id="@+id/sort_by_date_desc"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:background="@android:drawable/stat_sys_download_done" />
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

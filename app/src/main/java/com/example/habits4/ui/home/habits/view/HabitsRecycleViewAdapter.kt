@@ -1,4 +1,4 @@
-package com.example.habits4.ui.home.habits
+package com.example.habits4.ui.home.habits.view
 
 import android.graphics.Color
 import androidx.recyclerview.widget.RecyclerView
@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.habits4.R
+import com.example.habits4.ui.home.habits.Habit
 import kotlinx.android.extensions.LayoutContainer
-
 import kotlinx.android.synthetic.main.fragment_habits.view.*
 
 
@@ -24,8 +24,6 @@ class HabitsRecycleViewAdapter(
             containerView.habitDescription.text = habit.description
             containerView.habitPriority.text =
                 containerView.context.getString(R.string.priority_placeholder, habit.priority)
-            containerView.habitType.text =
-                containerView.context.getString(R.string.type_placeholder, habit.habitType)
             containerView.habitRunAmount.text =
                 containerView.context.resources.getQuantityString(
                     R.plurals.run_amount_placeholder,
