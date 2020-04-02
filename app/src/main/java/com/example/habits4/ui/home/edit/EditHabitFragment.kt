@@ -20,6 +20,7 @@ import com.example.habits4.databinding.FragmentEditHabitBinding
 import com.example.habits4.infrastructure.hideKeyboard
 import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.fragment_edit_habit.*
+import java.util.*
 
 
 class EditHabitFragment : Fragment() {
@@ -192,7 +193,8 @@ class EditHabitFragment : Fragment() {
             newType.findViewById<RadioButton>(newType.checkedRadioButtonId).text.toString(),
             newRunAmount.text.toString().toInt(),
             newPeriodicity.text.toString().toInt(),
-            habitColor
+            habitColor,
+            Date()
         )
 
         viewModel.saveHabit(resultHabit)

@@ -9,6 +9,8 @@ import com.example.habits4.R
 import com.example.habits4.ui.home.habits.Habit
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.fragment_habits.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class HabitsRecycleViewAdapter(
@@ -18,6 +20,8 @@ class HabitsRecycleViewAdapter(
     class ViewHolder(
         override val containerView: View
     ) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+
+        private val simpleDateFormat = SimpleDateFormat("HH:mm  dd.MM.yyyy ", Locale.ROOT)
 
         fun bind(habit: Habit) {
             containerView.habitName.text = habit.name
@@ -36,6 +40,7 @@ class HabitsRecycleViewAdapter(
                     habit.periodicity,
                     habit.periodicity
                 )
+            containerView.habitEditDate.text = simpleDateFormat.format(habit.editDate)
             containerView.habitColor.setBackgroundColor(habit.color)
             containerView.habitColorRGB.text =
                 containerView.context.getString(
@@ -57,7 +62,8 @@ class HabitsRecycleViewAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_habits, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.fragment_habits, parent, false)
         return ViewHolder(
             view
         )

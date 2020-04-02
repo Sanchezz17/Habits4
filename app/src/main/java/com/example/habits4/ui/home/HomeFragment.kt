@@ -44,7 +44,15 @@ class HomeFragment : Fragment() {
         }
 
         nameFilter.addTextChangedListener {
-            viewModel.nameFilterSubstring.postValue(it.toString())
+            viewModel.nameFilterSubstring.value = it.toString()
+        }
+
+        sortByDateAsc.setOnClickListener {
+            viewModel.sortByDateAsc()
+        }
+
+        sortByDateDesc.setOnClickListener {
+            viewModel.sortByDateDesc()
         }
     }
 }

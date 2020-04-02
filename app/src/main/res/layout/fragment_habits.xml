@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_margin="@dimen/habit_margin"
+    android:layout_marginHorizontal="@dimen/habit_margin"
     android:baselineAligned="false">
 
     <LinearLayout
@@ -66,6 +66,15 @@
         android:orientation="vertical"
         android:layout_weight="1">
 
+        <TextView
+            android:id="@+id/habitEditDate"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:gravity="start"
+            android:textColor="@android:color/black"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
         <View
             android:id="@+id/habitColor"
             android:layout_width="70dp"
@@ -76,15 +85,15 @@
         <TextView
             android:id="@+id/habitColorRGB"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
         <TextView
             android:id="@+id/habitColorHSV"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:gravity="center"
+            android:layout_height="30dp"
+            android:gravity="center_horizontal"
             android:textAppearance="@style/TextAppearance.AppCompat.Small" />
     </LinearLayout>
 </LinearLayout>

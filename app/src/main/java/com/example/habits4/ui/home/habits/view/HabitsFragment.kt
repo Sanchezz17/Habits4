@@ -50,9 +50,6 @@ class HabitsFragment : Fragment() {
         viewModel.habits.observe(viewLifecycleOwner, Observer { habits ->
             initializeRecyclerView(habits)
         })
-        viewModel.nameFilterSubstring.observe(viewLifecycleOwner, Observer {
-            viewModel.habits.value?.let { habits -> initializeRecyclerView(habits) }
-        })
     }
 
     private fun initializeRecyclerView(habits: List<Habit>) {
@@ -73,14 +70,5 @@ class HabitsFragment : Fragment() {
                 }
             })
         }
-//        habitsRecyclerView.addOnLayoutChangeListener { view, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
-//            if (bottom < oldBottom) {
-//                habitsRecyclerView.post {
-//                    habitsRecyclerView.scrollToPosition(
-//                        habitsRecyclerView.adapter!!.itemCount - 1
-//                    )
-//                }
-//            }
-//        }
     }
 }
