@@ -6,9 +6,14 @@ import androidx.lifecycle.ViewModel
 import com.example.habits4.repositories.InMemoryHabitsRepository
 
 
-class HabitsViewModel(private val habitsFilter: (Habit) -> Boolean) : ViewModel() {
+class HabitsViewModel : ViewModel() {
+    val nameFilterSubstring: MutableLiveData<String>
+        get() = MutableLiveData()
+
     val habits: LiveData<List<Habit>>
         get() = MutableLiveData(
-            InMemoryHabitsRepository.habits.value?.filter(habitsFilter) ?: listOf()
+            InMemoryHabitsRepository.habits.value
+                ?.filter { nameFilterSubstring.value.isNullOrEmpty() || nameFilterSubstring.value!! in it.name }
+                ?: listOf()
         )
 }

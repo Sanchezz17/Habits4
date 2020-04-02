@@ -5,9 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -31,21 +30,14 @@ class HabitsFragment : Fragment() {
         }
     }
 
+    private val viewModel: HabitsViewModel by activityViewModels()
+
     var habitsType: String = ""
     lateinit var navController: NavController
-    lateinit var viewModel: HabitsViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return HabitsViewModel { habit: Habit -> habit.habitType == habitsType } as T
-            }
-        }).get(HabitsViewModel::class.java)
-    }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_habits_list, container, false)
@@ -58,10 +50,14 @@ class HabitsFragment : Fragment() {
         viewModel.habits.observe(viewLifecycleOwner, Observer { habits ->
             initializeRecyclerView(habits)
         })
+        viewModel.nameFilterSubstring.observe(viewLifecycleOwner, Observer {
+            viewModel.habits.value?.let { habits -> initializeRecyclerView(habits) }
+        })
     }
 
-    private fun initializeRecyclerView(filteredHabits: List<Habit>) {
+    private fun initializeRecyclerView(habits: List<Habit>) {
         habitsRecyclerView.apply {
+            val filteredHabits = habits.filter { it.habitType == habitsType }
             adapter = HabitsRecycleViewAdapter(filteredHabits)
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(
@@ -77,14 +73,14 @@ class HabitsFragment : Fragment() {
                 }
             })
         }
-        habitsRecyclerView.addOnLayoutChangeListener { view, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
-            if (bottom > oldBottom) {
-                habitsRecyclerView.post {
-                    habitsRecyclerView.scrollToPosition(
-                        habitsRecyclerView.adapter!!.itemCount - 1
-                    )
-                }
-            }
-        }
+//        habitsRecyclerView.addOnLayoutChangeListener { view, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+//            if (bottom < oldBottom) {
+//                habitsRecyclerView.post {
+//                    habitsRecyclerView.scrollToPosition(
+//                        habitsRecyclerView.adapter!!.itemCount - 1
+//                    )
+//                }
+//            }
+//        }
     }
 }

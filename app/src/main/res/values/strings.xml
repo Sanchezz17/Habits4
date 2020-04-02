@@ -36,4 +36,6 @@
     <string name="filters">Фильтры и сортировки</string>
     <string name="find_by_name">Найти по названию</string>
     <string name="sort_by_edit_date">Сортировать по времени редактирования</string>
+    <string name="sort_by_edit_date_asc">Сортировать по времени редактирования по возрастанию</string>
+    <string name="sort_by_edit_date_desc">Сортировать по времени редактирования по убыванию</string>
 </resources>

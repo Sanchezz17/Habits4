@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottom_sheet"
     android:layout_width="match_parent"
@@ -35,6 +36,7 @@
             android:textColor="@android:color/white" />
 
         <EditText
+            android:id="@+id/nameFilter"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_habit_base_height"
             android:hint="@string/find_by_name"
@@ -63,14 +65,16 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_margin="2dp"
-                android:background="@android:drawable/ic_menu_upload" />
+                android:background="@android:drawable/ic_menu_upload"
+                android:contentDescription="@string/sort_by_edit_date_asc" />
 
             <ImageButton
                 android:id="@+id/sort_by_date_desc"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:background="@android:drawable/stat_sys_download_done" />
+                android:background="@android:drawable/stat_sys_download_done"
+                android:contentDescription="@string/sort_by_edit_date_desc" />
         </LinearLayout>
 
     </LinearLayout>

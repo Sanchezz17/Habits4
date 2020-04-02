@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/habitsRecyclerView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:windowSoftInputMode="adjustResize"
-    android:layout_marginTop="16dp"
-    android:clipToPadding="false"
-    android:paddingBottom="80dp"
-    app:layoutManager="LinearLayoutManager"
-    tools:listitem="@layout/fragment_habits"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" />
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/habitsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:windowSoftInputMode="adjustResize"
+        android:layout_marginTop="16dp"
+        android:clipToPadding="false"
+        android:paddingBottom="80dp"
+        app:layoutManager="LinearLayoutManager"
+        tools:listitem="@layout/fragment_habits" />
+</LinearLayout>
+
