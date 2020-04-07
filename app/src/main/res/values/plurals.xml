@@ -11,5 +11,6 @@
         <item quantity="one">в %1$d день</item>
         <item quantity="few">в %1$d дня</item>
         <item quantity="many">в %1$d дней</item>
+        <item quantity="other">в %1$d дня</item>
     </plurals>
 </resources>

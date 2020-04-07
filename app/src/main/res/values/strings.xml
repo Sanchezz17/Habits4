@@ -38,4 +38,5 @@
     <string name="sort_by_edit_date">Сортировать по времени редактирования</string>
     <string name="sort_by_edit_date_asc">Сортировать по времени редактирования по возрастанию</string>
     <string name="sort_by_edit_date_desc">Сортировать по времени редактирования по убыванию</string>
+    <string name="delete_habit">Удалить привычку</string>
 </resources>

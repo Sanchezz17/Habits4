@@ -5,8 +5,9 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import com.example.habits4.R
-import com.example.habits4.ui.home.habits.Habit
+import com.example.habits4.database.Habit
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.fragment_habits.view.*
 import java.text.SimpleDateFormat
@@ -14,7 +15,8 @@ import java.util.*
 
 
 class HabitsRecycleViewAdapter(
-    private val habits: List<Habit>
+    private val habits: List<Habit>, private val onItemClickListener: (Habit) -> Unit,
+    private val onLongItemClickListener: (View, Habit) -> Boolean
 ) : RecyclerView.Adapter<HabitsRecycleViewAdapter.ViewHolder>() {
 
     class ViewHolder(
@@ -23,7 +25,10 @@ class HabitsRecycleViewAdapter(
 
         private val simpleDateFormat = SimpleDateFormat("HH:mm  dd.MM.yyyy ", Locale.ROOT)
 
-        fun bind(habit: Habit) {
+        fun bind(
+            habit: Habit, onItemClickListener: (Habit) -> Unit,
+            onLongItemClickListener: (View, Habit) -> Boolean
+        ) {
             containerView.habitName.text = habit.name
             containerView.habitDescription.text = habit.description
             containerView.habitPriority.text =
@@ -58,20 +63,20 @@ class HabitsRecycleViewAdapter(
                     hsv[1].toInt(),
                     hsv[2].toInt()
                 )
+            containerView.setOnClickListener { onItemClickListener(habit) }
+            containerView.setOnLongClickListener { onLongItemClickListener(it, habit) }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.fragment_habits, parent, false)
-        return ViewHolder(
-            view
-        )
+        return ViewHolder(view)
     }
 
     override fun getItemCount(): Int = habits.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(habits[position])
+        holder.bind(habits[position], onItemClickListener, onLongItemClickListener)
     }
 }

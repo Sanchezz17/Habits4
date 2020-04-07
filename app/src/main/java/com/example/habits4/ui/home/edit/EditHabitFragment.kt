@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.habits4.infrastructure.getHueGradient
-import com.example.habits4.ui.home.habits.Habit
+import com.example.habits4.database.Habit
 import com.example.habits4.R
 import com.example.habits4.databinding.FragmentEditHabitBinding
 import com.example.habits4.infrastructure.hideKeyboard
@@ -75,7 +75,7 @@ class EditHabitFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        activity?.menuInflater?.inflate(R.menu.edit_habit_menu, menu)
+        inflater.inflate(R.menu.edit_habit_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -186,7 +186,6 @@ class EditHabitFragment : Fragment() {
         }
 
         val resultHabit = Habit(
-            habitId,
             newName.text.toString(),
             newDescription.text.toString(),
             newPriority.selectedItem.toString(),
@@ -201,6 +200,6 @@ class EditHabitFragment : Fragment() {
 
         hideKeyboard()
 
-        navController.popBackStack()
+        navController.navigateUp()
     }
 }
