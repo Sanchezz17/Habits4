@@ -22,10 +22,13 @@ import kotlinx.android.synthetic.main.fragment_habits_list.*
 
 class HabitsFragment : Fragment() {
     companion object {
+        private const val ARGS_HABIT_TYPE = "HABIT_TYPE"
 
         fun newInstance(habitsType: String): HabitsFragment {
             val fragment = HabitsFragment()
-            fragment.habitsType = habitsType
+            val bundle = Bundle()
+            bundle.putString(ARGS_HABIT_TYPE, habitsType)
+            fragment.arguments = bundle
             return fragment
         }
     }
@@ -44,6 +47,9 @@ class HabitsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        arguments?.let {
+            habitsType = it.getString(ARGS_HABIT_TYPE, "")
+        }
 
         viewModel.habits.observe(viewLifecycleOwner, Observer { habits ->
             initializeRecyclerView(habits)
