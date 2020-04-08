@@ -3,14 +3,17 @@
     <plurals name="run_amount_placeholder">
         <item quantity="zero">%1$d раз</item>
         <item quantity="one">%1$d раз</item>
+        <item quantity="two">%1$d раза</item>
         <item quantity="few">%1$d раза</item>
         <item quantity="many">%1$d раз</item>
+        <item quantity="other">%1$d раз</item>
     </plurals>
     <plurals name="periodicity_placeholder">
         <item quantity="zero">в %1$d дней</item>
         <item quantity="one">в %1$d день</item>
+        <item quantity="two">в %1$d дня</item>
         <item quantity="few">в %1$d дня</item>
         <item quantity="many">в %1$d дней</item>
-        <item quantity="other">в %1$d дня</item>
+        <item quantity="other">в %1$d дней</item>
     </plurals>
 </resources>
