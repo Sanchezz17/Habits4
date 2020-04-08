@@ -7,7 +7,6 @@ import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.core.graphics.drawable.toBitmap
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -16,7 +15,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.habits4.infrastructure.getHueGradient
 import com.example.habits4.database.Habit
 import com.example.habits4.R
-import com.example.habits4.databinding.FragmentEditHabitBinding
 import com.example.habits4.infrastructure.hideKeyboard
 import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.fragment_edit_habit.*
@@ -50,15 +48,7 @@ class EditHabitFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         setHasOptionsMenu(true)
-        val binding = DataBindingUtil.inflate<FragmentEditHabitBinding>(
-            inflater,
-            R.layout.fragment_edit_habit,
-            container,
-            false
-        )
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
-        return binding.root
+        return inflater.inflate(R.layout.fragment_edit_habit, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -138,6 +128,9 @@ class EditHabitFragment : Fragment() {
     }
 
     private fun restoreHabitState(habit: Habit) {
+        newName.setText(habit.name)
+        newDescription.setText(habit.description)
+
         val adapter = newPriority.adapter as ArrayAdapter<String>
         newPriority.setSelection(adapter.getPosition(habit.priority))
 

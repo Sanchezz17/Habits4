@@ -1,113 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal">
 
-    <data>
-        <variable
-            name="viewModel"
-            type="com.example.habits4.ui.home.edit.EditHabitViewModel" />
-    </data>
-
-    <ScrollView
-        android:layout_height="match_parent"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_gravity="center_horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".AddChangeHabitActivity">
+
+
+        <EditText
+            android:id="@+id/newName"
+            style="@style/EditHabitEditTextStyle"
+            android:autofillHints=""
+            android:hint="@string/name"
+            android:inputType="textCapSentences" />
+
+        <EditText
+            android:id="@+id/newDescription"
+            style="@style/EditHabitEditTextStyle"
+            android:layout_height="84dp"
+            android:autofillHints=""
+            android:hint="@string/description"
+            android:inputType="textCapSentences" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            tools:context=".AddChangeHabitActivity">
+            android:layout_height="wrap_content">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/edit_habit_base_height"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="@dimen/habit_margin"
+                android:text="@string/priority"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/colorPrimaryDark" />
 
-            <EditText
-                android:id="@+id/newName"
-                style="@style/EditHabitEditTextStyle"
-                android:autofillHints=""
-                android:hint="@string/name"
-                android:inputType="textCapSentences"
-                android:text="@{viewModel.habit.name}" />
-
-            <EditText
-                android:id="@+id/newDescription"
-                style="@style/EditHabitEditTextStyle"
-                android:layout_height="84dp"
-                android:autofillHints=""
-                android:hint="@string/description"
-                android:inputType="textCapSentences"
-                android:text="@{viewModel.habit.description}" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/edit_habit_base_height"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="@dimen/habit_margin"
-                    android:text="@string/priority"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/colorPrimaryDark" />
-
-                <Spinner
-                    android:id="@+id/newPriority"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/edit_habit_base_height"
-                    android:layout_margin="@dimen/habit_margin"
-                    android:entries="@array/habit_priorities" />
-            </LinearLayout>
-
-
-            <RadioGroup
-                android:id="@+id/newType"
+            <Spinner
+                android:id="@+id/newPriority"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/edit_habit_base_height"
                 android:layout_margin="@dimen/habit_margin"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/edit_habit_radio_button_height"
-                    android:layout_margin="@dimen/habit_margin"
-                    android:text="@string/harmful" />
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/edit_habit_radio_button_height"
-                    android:layout_margin="@dimen/habit_margin"
-                    android:text="@string/useful" />
-
-            </RadioGroup>
-
-            <EditText
-                android:id="@+id/newRunAmount"
-                style="@style/EditHabitEditTextStyle"
-                android:autofillHints=""
-                android:hint="@string/run_amount"
-                android:inputType="number" />
-
-            <EditText
-                android:id="@+id/newPeriodicity"
-                style="@style/EditHabitEditTextStyle"
-                android:autofillHints=""
-                android:hint="@string/periodicity"
-                android:inputType="number" />
-
-            <HorizontalScrollView
-                android:id="@+id/colorScroll"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:layout_margin="@dimen/habit_margin">
-
-                <LinearLayout
-                    android:id="@+id/colorScrollLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" />
-            </HorizontalScrollView>
+                android:entries="@array/habit_priorities" />
         </LinearLayout>
-    </ScrollView>
-</layout>
+
+
+        <RadioGroup
+            android:id="@+id/newType"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_habit_base_height"
+            android:layout_margin="@dimen/habit_margin"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/edit_habit_radio_button_height"
+                android:layout_margin="@dimen/habit_margin"
+                android:text="@string/harmful" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/edit_habit_radio_button_height"
+                android:layout_margin="@dimen/habit_margin"
+                android:text="@string/useful" />
+
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/newRunAmount"
+            style="@style/EditHabitEditTextStyle"
+            android:autofillHints=""
+            android:hint="@string/run_amount"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/newPeriodicity"
+            style="@style/EditHabitEditTextStyle"
+            android:autofillHints=""
+            android:hint="@string/periodicity"
+            android:inputType="number" />
+
+        <HorizontalScrollView
+            android:id="@+id/colorScroll"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_margin="@dimen/habit_margin">
+
+            <LinearLayout
+                android:id="@+id/colorScrollLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+        </HorizontalScrollView>
+    </LinearLayout>
+</ScrollView>
+
