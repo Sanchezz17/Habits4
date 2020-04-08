@@ -11,7 +11,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.habits4.App
 import com.example.habits4.R
 import com.example.habits4.ui.home.HomeFragmentDirections
 import com.example.habits4.database.Habit
@@ -70,7 +69,7 @@ class HabitsFragment : Fragment() {
                     popupMenu.inflate(R.menu.habit_long_click_menu)
                     popupMenu.setOnMenuItemClickListener { item ->
                         when (item.itemId) {
-                            R.id.delete_habit -> App.database.habitDao().delete(habit)
+                            R.id.delete_habit -> viewModel.deleteHabit(habit)
                         }
                         true
                     }

@@ -39,4 +39,8 @@ class HabitsViewModel : ViewModel() {
     fun sortByDateDesc() {
         habits.value = habits.value?.sortedByDescending { it.editDate }
     }
+
+    fun deleteHabit(habit: Habit) {
+        App.database.habitDao().delete(habit)
+    }
 }
