@@ -49,37 +49,43 @@ class HabitsFragment : Fragment() {
             habitsType = it.getString(ARGS_HABIT_TYPE, "")
         }
 
+        initializeRecyclerView()
+
         viewModel.habits.observe(viewLifecycleOwner, Observer { habits ->
-            initializeRecyclerView(habits)
+            (habitsRecyclerView.adapter as HabitsRecycleViewAdapter)
+                .setHabits(habits.filter { it.habitType == habitsType })
         })
     }
 
-    private fun initializeRecyclerView(habits: List<Habit>) {
+    private fun initializeRecyclerView() {
         habitsRecyclerView.apply {
-            val filteredHabits = habits.filter { it.habitType == habitsType }
-            adapter = HabitsRecycleViewAdapter(filteredHabits,
-                { habit ->
-                    val action = HomeFragmentDirections.actionHabitsFragmentToEditHabitFragment(
-                        habit.id ?: Habit.INVALID_ID
-                    )
-                    findNavController().navigate(action)
-                },
-                { view, habit ->
-                    val popupMenu = PopupMenu(context, view)
-                    popupMenu.inflate(R.menu.habit_long_click_menu)
-                    popupMenu.setOnMenuItemClickListener { item ->
-                        when (item.itemId) {
-                            R.id.delete_habit -> viewModel.deleteHabit(habit)
-                        }
-                        true
-                    }
-                    popupMenu.show()
-                    true
-                })
+            val filteredHabits =
+                viewModel.habits.value?.filter { it.habitType == habitsType } ?: listOf()
+            adapter = HabitsRecycleViewAdapter(filteredHabits, ::onHabitClick, ::onLongHabitClick)
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(
                 DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
             )
         }
+    }
+
+    private fun onHabitClick(habit: Habit) {
+        val action = HomeFragmentDirections.actionHabitsFragmentToEditHabitFragment(
+            habit.id ?: Habit.INVALID_ID
+        )
+        findNavController().navigate(action)
+    }
+
+    private fun onLongHabitClick(view: View, habit: Habit): Boolean {
+        val popupMenu = PopupMenu(context, view)
+        popupMenu.inflate(R.menu.habit_long_click_menu)
+        popupMenu.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.delete_habit -> viewModel.deleteHabit(habit)
+            }
+            true
+        }
+        popupMenu.show()
+        return true
     }
 }

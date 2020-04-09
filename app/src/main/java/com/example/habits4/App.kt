@@ -14,10 +14,10 @@ class App : Application() {
         super.onCreate()
 
         database = Room
-            .databaseBuilder(
-                applicationContext,
-                AppDatabase::class.java, "HabitsDB"
-            )
+                .databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java, "HabitsDB"
+        )
             .allowMainThreadQueries()
             .build()
     }
