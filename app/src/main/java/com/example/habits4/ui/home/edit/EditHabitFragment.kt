@@ -189,7 +189,7 @@ class EditHabitFragment : Fragment() {
             Date()
         )
 
-        viewModel.saveHabit(resultHabit)
+        viewModel.postSaveHabit(resultHabit)
 
         hideKeyboard()
 
