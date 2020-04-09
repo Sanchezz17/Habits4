@@ -15,7 +15,7 @@ import java.util.*
 
 
 class HabitsRecycleViewAdapter(
-    private val habits: List<Habit>, private val onItemClickListener: (Habit) -> Unit,
+    private var habits: List<Habit>, private val onItemClickListener: (Habit) -> Unit,
     private val onLongItemClickListener: (View, Habit) -> Boolean
 ) : RecyclerView.Adapter<HabitsRecycleViewAdapter.ViewHolder>() {
 
@@ -78,5 +78,10 @@ class HabitsRecycleViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(habits[position], onItemClickListener, onLongItemClickListener)
+    }
+
+    fun setHabits(newHabits: List<Habit>) {
+        habits = newHabits
+        notifyDataSetChanged()
     }
 }
