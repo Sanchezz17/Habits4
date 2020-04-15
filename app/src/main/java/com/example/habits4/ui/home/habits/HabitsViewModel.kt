@@ -3,7 +3,7 @@ package com.example.habits4.ui.home.habits
 import androidx.lifecycle.*
 import androidx.lifecycle.Observer
 import com.example.habits4.App
-import com.example.habits4.database.Habit
+import com.example.habits4.model.Habit
 import java.util.*
 
 
@@ -29,15 +29,15 @@ class HabitsViewModel : ViewModel() {
         newNameFilterSubstring: String? = nameFilterSubstring.value
     ): Boolean {
         return newNameFilterSubstring.isNullOrEmpty() ||
-                newNameFilterSubstring.toLowerCase(Locale.ROOT) in habit.name.toLowerCase(Locale.ROOT)
+                newNameFilterSubstring.toLowerCase(Locale.ROOT) in habit.title.toLowerCase(Locale.ROOT)
     }
 
     fun sortByDateAsc() {
-        habits.value = habits.value?.sortedBy { it.editDate }
+        habits.value = habits.value?.sortedBy { it.date }
     }
 
     fun sortByDateDesc() {
-        habits.value = habits.value?.sortedByDescending { it.editDate }
+        habits.value = habits.value?.sortedByDescending { it.date }
     }
 
     fun deleteHabit(habit: Habit) {

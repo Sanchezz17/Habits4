@@ -13,9 +13,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.habits4.infrastructure.getHueGradient
-import com.example.habits4.database.Habit
+import com.example.habits4.model.Habit
 import com.example.habits4.R
 import com.example.habits4.infrastructure.hideKeyboard
+import com.example.habits4.model.enums.HabitPriority
+import com.example.habits4.model.enums.HabitType
 import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.fragment_edit_habit.*
 import java.util.*
@@ -128,20 +130,18 @@ class EditHabitFragment : Fragment() {
     }
 
     private fun restoreHabitState(habit: Habit) {
-        newName.setText(habit.name)
+        newTitle.setText(habit.title)
         newDescription.setText(habit.description)
-
-        val adapter = newPriority.adapter as ArrayAdapter<String>
-        newPriority.setSelection(adapter.getPosition(habit.priority))
+        newPriority.setSelection(habit.priority.value)
 
         val typeViews = arrayListOf<View>()
-        newType.findViewsWithText(typeViews, habit.habitType, View.FIND_VIEWS_WITH_TEXT)
+        newType.findViewsWithText(typeViews, habit.type.title, View.FIND_VIEWS_WITH_TEXT)
         if (typeViews.size > 0) {
             newType.check(typeViews[0].id)
         }
 
-        newRunAmount.setText(habit.runAmount.toString())
-        newPeriodicity.setText(habit.periodicity.toString())
+        newCount.setText(habit.count.toString())
+        newFrequency.setText(habit.frequency.toString())
 
         habitColor = habit.color
         val rectSize = resources.getDimension(R.dimen.rect_size).toInt()
@@ -160,11 +160,11 @@ class EditHabitFragment : Fragment() {
     }
 
     private fun isAllFieldsFilled(): Boolean {
-        return newName.text.isNotEmpty()
+        return newTitle.text.isNotEmpty()
                 && newDescription.text.isNotEmpty()
                 && newType.checkedRadioButtonId != -1
-                && newRunAmount.text.isNotEmpty()
-                && newPeriodicity.text.isNotEmpty()
+                && newCount.text.isNotEmpty()
+                && newFrequency.text.isNotEmpty()
                 && habitRect != null
     }
 
@@ -179,14 +179,16 @@ class EditHabitFragment : Fragment() {
         }
 
         val resultHabit = Habit(
-            newName.text.toString(),
+            newTitle.text.toString(),
             newDescription.text.toString(),
-            newPriority.selectedItem.toString(),
-            newType.findViewById<RadioButton>(newType.checkedRadioButtonId).text.toString(),
-            newRunAmount.text.toString().toInt(),
-            newPeriodicity.text.toString().toInt(),
+            HabitPriority.getByTitle(newPriority.selectedItem.toString()),
+            HabitType.getByTitle(
+                newType.findViewById<RadioButton>(newType.checkedRadioButtonId).text.toString()
+            ),
+            newCount.text.toString().toInt(),
+            newFrequency.text.toString().toInt(),
             habitColor,
-            Date()
+            Date().time
         )
 
         viewModel.saveHabit(resultHabit)

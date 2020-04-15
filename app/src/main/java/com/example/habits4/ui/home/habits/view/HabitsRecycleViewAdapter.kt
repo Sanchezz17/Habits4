@@ -5,9 +5,8 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
 import com.example.habits4.R
-import com.example.habits4.database.Habit
+import com.example.habits4.model.Habit
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.fragment_habits.view.*
 import java.text.SimpleDateFormat
@@ -29,23 +28,23 @@ class HabitsRecycleViewAdapter(
             habit: Habit, onItemClickListener: (Habit) -> Unit,
             onLongItemClickListener: (View, Habit) -> Boolean
         ) {
-            containerView.habitName.text = habit.name
+            containerView.habitTitle.text = habit.title
             containerView.habitDescription.text = habit.description
             containerView.habitPriority.text =
-                containerView.context.getString(R.string.priority_placeholder, habit.priority)
-            containerView.habitRunAmount.text =
+                containerView.context.getString(R.string.priority_placeholder, habit.priority.title)
+            containerView.habitCount.text =
                 containerView.context.resources.getQuantityString(
                     R.plurals.run_amount_placeholder,
-                    habit.runAmount,
-                    habit.runAmount
+                    habit.count,
+                    habit.count
                 )
-            containerView.habitPeriodicity.text =
+            containerView.habitFrequency.text =
                 containerView.context.resources.getQuantityString(
                     R.plurals.periodicity_placeholder,
-                    habit.periodicity,
-                    habit.periodicity
+                    habit.frequency,
+                    habit.frequency
                 )
-            containerView.habitEditDate.text = simpleDateFormat.format(habit.editDate)
+            containerView.habitEditDate.text = simpleDateFormat.format(Date(habit.date))
             containerView.habitColor.setBackgroundColor(habit.color)
             containerView.habitColorRGB.text =
                 containerView.context.getString(

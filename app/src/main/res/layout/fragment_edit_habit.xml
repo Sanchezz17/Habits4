@@ -13,7 +13,7 @@
 
 
         <EditText
-            android:id="@+id/newName"
+            android:id="@+id/newTitle"
             style="@style/EditHabitEditTextStyle"
             android:autofillHints=""
             android:hint="@string/name"
@@ -72,14 +72,14 @@
         </RadioGroup>
 
         <EditText
-            android:id="@+id/newRunAmount"
+            android:id="@+id/newCount"
             style="@style/EditHabitEditTextStyle"
             android:autofillHints=""
             android:hint="@string/run_amount"
             android:inputType="number" />
 
         <EditText
-            android:id="@+id/newPeriodicity"
+            android:id="@+id/newFrequency"
             style="@style/EditHabitEditTextStyle"
             android:autofillHints=""
             android:hint="@string/periodicity"

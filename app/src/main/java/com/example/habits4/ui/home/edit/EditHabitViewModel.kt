@@ -3,7 +3,7 @@ package com.example.habits4.ui.home.edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.habits4.App
-import com.example.habits4.database.Habit
+import com.example.habits4.model.Habit
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
@@ -26,7 +26,7 @@ class EditHabitViewModel(private val habitId: Int) : ViewModel(), CoroutineScope
         if (habitId == Habit.INVALID_ID) {
             withContext(Dispatchers.IO) { habitDao.insert(habit) }
         } else {
-            habit.id = habitId
+            habit.uid = habitId
             withContext(Dispatchers.IO) { habitDao.update(habit) }
         }
     }
