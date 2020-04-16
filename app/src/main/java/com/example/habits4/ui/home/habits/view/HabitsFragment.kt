@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.habits4.R
 import com.example.habits4.ui.home.HomeFragmentDirections
-import com.example.habits4.database.Habit
+import com.example.habits4.model.Habit
 import com.example.habits4.ui.home.habits.HabitsViewModel
 import kotlinx.android.synthetic.main.fragment_habits_list.*
 
@@ -53,14 +53,14 @@ class HabitsFragment : Fragment() {
 
         viewModel.habits.observe(viewLifecycleOwner, Observer { habits ->
             (habitsRecyclerView.adapter as HabitsRecycleViewAdapter)
-                .setHabits(habits.filter { it.habitType == habitsType })
+                .setHabits(habits.filter { it.type.title == habitsType })
         })
     }
 
     private fun initializeRecyclerView() {
         habitsRecyclerView.apply {
             val filteredHabits =
-                viewModel.habits.value?.filter { it.habitType == habitsType } ?: listOf()
+                viewModel.habits.value?.filter { it.type.title == habitsType } ?: listOf()
             adapter = HabitsRecycleViewAdapter(filteredHabits, ::onHabitClick, ::onLongHabitClick)
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(
@@ -70,9 +70,7 @@ class HabitsFragment : Fragment() {
     }
 
     private fun onHabitClick(habit: Habit) {
-        val action = HomeFragmentDirections.actionHabitsFragmentToEditHabitFragment(
-            habit.id ?: Habit.INVALID_ID
-        )
+        val action = HomeFragmentDirections.actionHabitsFragmentToEditHabitFragment(habit.uid)
         findNavController().navigate(action)
     }
 
