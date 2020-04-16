@@ -14,19 +14,18 @@ import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 
 class App : Application() {
     companion object {
-        lateinit var database: AppDatabase
-        lateinit var habitApi: HabitApi
         lateinit var habitsRepository: HabitsRepository
     }
 
     override fun onCreate() {
         super.onCreate()
 
-        database = Room
+        val database = Room
                 .databaseBuilder(
             applicationContext,
             AppDatabase::class.java, "HabitsDB"
@@ -42,6 +41,9 @@ class App : Application() {
 
         val okHttpClient= OkHttpClient().newBuilder()
             .addInterceptor(AuthorizationHeaderInterceptor())
+            .writeTimeout(5, TimeUnit.SECONDS)
+            .readTimeout(5, TimeUnit.SECONDS)
+            .connectTimeout(5, TimeUnit.SECONDS)
             .build()
 
         val retrofit = Retrofit.Builder()
@@ -50,7 +52,7 @@ class App : Application() {
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
 
-        habitApi = retrofit.create(HabitApi::class.java)
+        val habitApi = retrofit.create(HabitApi::class.java)
 
         habitsRepository = HabitsRepository(database.habitDao(), habitApi)
     }

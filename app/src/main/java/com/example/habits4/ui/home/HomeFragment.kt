@@ -29,8 +29,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        homeViewPager.adapter =
-            HabitsPagerAdapter(this)
+        homeViewPager.adapter = HabitsPagerAdapter(this)
         TabLayoutMediator(homeTabs, homeViewPager) { tab, position ->
             tab.text = when (position) {
                 0 -> getString(R.string.harmful_habits)

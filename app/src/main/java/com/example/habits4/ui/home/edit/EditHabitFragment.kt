@@ -25,7 +25,7 @@ import java.util.*
 
 class EditHabitFragment : Fragment() {
     private val colorRectangles = mutableListOf<MaterialButton>()
-    private var habitId: Int = 0
+    private var habitUid: String? = null
     private var habitColor: Int = Color.BLACK
     private var habitRect: MaterialButton? = null
 
@@ -36,11 +36,11 @@ class EditHabitFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            habitId = EditHabitFragmentArgs.fromBundle(it).habitId
+            habitUid = EditHabitFragmentArgs.fromBundle(it).habitUid
         }
         viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return EditHabitViewModel(habitId) as T
+                return EditHabitViewModel(habitUid) as T
             }
         }).get(EditHabitViewModel::class.java)
     }
@@ -190,6 +190,8 @@ class EditHabitFragment : Fragment() {
             habitColor,
             Date().time
         )
+
+        resultHabit.uid = habitUid
 
         viewModel.saveHabit(resultHabit)
 

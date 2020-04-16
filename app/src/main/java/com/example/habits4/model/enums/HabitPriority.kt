@@ -2,8 +2,8 @@ package com.example.habits4.model.enums
 
 enum class HabitPriority(val value: Int, val title: String) {
     LOW(0, "Низкий"),
-    MEDIUM(0, "Средний"),
-    HIGH(0, "Высокий");
+    MEDIUM(1, "Средний"),
+    HIGH(2, "Высокий");
 
     companion object {
         fun getByTitle(title: String): HabitPriority {

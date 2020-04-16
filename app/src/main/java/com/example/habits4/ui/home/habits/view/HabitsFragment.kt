@@ -70,9 +70,7 @@ class HabitsFragment : Fragment() {
     }
 
     private fun onHabitClick(habit: Habit) {
-        val action = HomeFragmentDirections.actionHabitsFragmentToEditHabitFragment(
-            habit.uid ?: Habit.INVALID_ID
-        )
+        val action = HomeFragmentDirections.actionHabitsFragmentToEditHabitFragment(habit.uid)
         findNavController().navigate(action)
     }
 
