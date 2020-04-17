@@ -15,10 +15,19 @@ import java.lang.Exception
 
 class HabitsRepository(private val habitDao: HabitDao, private val habitApi: HabitApi) {
     suspend fun initializeHabitsInDB() {
-        habitDao.clearTable()
         doRequestUntilSuccess(
             { habitApi.getHabits() },
-            { withContext(Dispatchers.IO) { habitDao.insertAll(it) } }
+            { habitsFromServer ->
+                for (habitFromServer in habitsFromServer) {
+                    val habitFromDB = habitDao.getByUid(habitFromServer.uid).value
+                    if (habitFromDB == null) {
+                        withContext(Dispatchers.IO) { habitDao.insert(habitFromServer) }
+                    }
+                    else if (habitFromDB.date < habitFromServer.date) {
+                        withContext(Dispatchers.IO) { habitDao.update(habitFromServer) }
+                    }
+                }
+            }
         )
     }
 

@@ -22,11 +22,12 @@ interface HabitDao {
     @Update
     fun update(habit: Habit)
 
+    @Update
+    fun updateAll(habits: List<Habit>)
+
     @Delete
     fun delete(habit: Habit)
 
     @Query("DELETE FROM habit")
     fun clearTable()
-
-
 }

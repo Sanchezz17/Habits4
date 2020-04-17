@@ -31,7 +31,6 @@ class App : Application() {
             AppDatabase::class.java, "HabitsDB"
         )
             .fallbackToDestructiveMigration()
-            .allowMainThreadQueries()
             .build()
 
         val gson = GsonBuilder()
