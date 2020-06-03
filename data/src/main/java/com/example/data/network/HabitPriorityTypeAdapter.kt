@@ -1,6 +1,6 @@
 package com.example.data.network
 
-import com.example.domain.enums.HabitPriority
+import com.example.domain.entities.enums.HabitPriority
 import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonWriter

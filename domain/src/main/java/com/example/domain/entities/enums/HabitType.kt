@@ -1,4 +1,4 @@
-package com.example.domain.enums
+package com.example.domain.entities.enums
 
 enum class HabitType(val value: Int, val title: String) {
     HARMFUL(0, "Вредная"),

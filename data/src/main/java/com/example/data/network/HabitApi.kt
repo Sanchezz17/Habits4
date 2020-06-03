@@ -1,7 +1,7 @@
 package com.example.data.network
 
-import com.example.data.model.Habit
-import com.example.domain.HabitUID
+import com.example.data.models.Habit
+import com.example.domain.entities.HabitUID
 import retrofit2.Response
 import retrofit2.http.*
 

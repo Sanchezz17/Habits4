@@ -1,7 +1,7 @@
 package com.example.data.database.converters
 
 import androidx.room.TypeConverter
-import com.example.domain.enums.HabitType
+import com.example.domain.entities.enums.HabitType
 
 
 class HabitTypeConverter {

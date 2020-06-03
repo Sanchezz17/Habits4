@@ -1,4 +1,4 @@
-package com.example.domain.enums
+package com.example.domain.entities.enums
 
 enum class HabitPriority(val value: Int, val title: String) {
     LOW(0, "Низкий"),

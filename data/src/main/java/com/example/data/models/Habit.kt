@@ -1,11 +1,11 @@
-package com.example.data.model
+package com.example.data.models
 
 import android.graphics.Color
 import androidx.room.*
 import com.example.data.database.converters.HabitPriorityConverter
 import com.example.data.database.converters.HabitTypeConverter
-import com.example.domain.enums.HabitPriority
-import com.example.domain.enums.HabitType
+import com.example.domain.entities.enums.HabitPriority
+import com.example.domain.entities.enums.HabitType
 import androidx.annotation.NonNull
 
 

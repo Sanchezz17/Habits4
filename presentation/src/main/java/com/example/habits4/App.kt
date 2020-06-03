@@ -3,13 +3,13 @@ package com.example.habits4
 import android.app.Application
 import androidx.room.Room
 import com.example.data.database.AppDatabase
-import com.example.domain.enums.HabitPriority
-import com.example.domain.enums.HabitType
+import com.example.domain.entities.enums.HabitPriority
+import com.example.domain.entities.enums.HabitType
 import com.example.data.network.AuthorizationHeaderInterceptor
 import com.example.data.network.HabitApi
 import com.example.data.network.HabitPriorityTypeAdapter
 import com.example.data.network.HabitTypeTypeAdapter
-import com.example.data.repositories.HabitsRepository
+import com.example.data.repositories.HabitsRepositoryImpl
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit
 
 class App : Application() {
     companion object {
-        lateinit var habitsRepository: HabitsRepository
+        lateinit var habitsRepository: HabitsRepositoryImpl
     }
 
     override fun onCreate() {
@@ -57,7 +57,7 @@ class App : Application() {
 
         val habitApi = retrofit.create(HabitApi::class.java)
 
-        habitsRepository = HabitsRepository(
+        habitsRepository = HabitsRepositoryImpl(
             database.habitDao(),
             habitApi
         )

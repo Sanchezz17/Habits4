@@ -1,23 +1,33 @@
 package com.example.data.repositories
 
 import android.util.Log
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
+import com.example.data.mappers.toEntity
+import com.example.data.mappers.toModel
 import com.example.data.network.HabitApi
-import com.example.data.model.Habit
+import com.example.domain.entities.HabitEntity
+import com.example.domain.entities.HabitUID
+import com.example.domain.repositories.HabitsRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import retrofit2.Response
 import java.lang.Exception
 
 
-class HabitsRepository(private val habitDao: com.example.data.database.HabitDao, private val habitApi: HabitApi) {
-    suspend fun initializeHabitsInDB() {
+class HabitsRepositoryImpl(
+    private val habitDao: com.example.data.database.HabitDao,
+    private val habitApi: HabitApi
+) : HabitsRepository {
+
+    override suspend fun initializeHabitsInDB() {
         doRequestUntilSuccess(
             { habitApi.getHabits() },
             { habitsFromServer ->
                 for (habitFromServer in habitsFromServer) {
-                    val habitFromDB = habitDao.getByUid(habitFromServer.uid).value
+                    val habitFromDB = habitDao.getByUid(habitFromServer.uid).asLiveData().value
                     if (habitFromDB == null) {
                         withContext(Dispatchers.IO) { habitDao.insert(habitFromServer) }
                     }
@@ -29,7 +39,8 @@ class HabitsRepository(private val habitDao: com.example.data.database.HabitDao,
         )
     }
 
-    suspend fun addOrUpdateHabit(habit: Habit) {
+    override suspend fun addOrUpdateHabit(habitEntity: HabitEntity) {
+        val habit = habitEntity.toModel()
         doRequestUntilSuccess(
             { habitApi.addOrUpdateHabit(habit) },
             {
@@ -44,9 +55,10 @@ class HabitsRepository(private val habitDao: com.example.data.database.HabitDao,
         )
     }
 
-    suspend fun deleteHabit(habit: Habit) {
+    override suspend fun deleteHabit(habitEntity: HabitEntity) {
+        val habit = habitEntity.toModel()
         doRequestUntilSuccess(
-            { habitApi.deleteHabit(com.example.domain.HabitUID(habit.uid)) },
+            { habitApi.deleteHabit(HabitUID(habit.uid)) },
             { _ -> withContext(Dispatchers.IO) { habitDao.delete(habit) } }
         )
     }
@@ -87,9 +99,11 @@ class HabitsRepository(private val habitDao: com.example.data.database.HabitDao,
         }
     }
 
-    fun getAllHabits(): LiveData<List<Habit>> = habitDao.getAll()
+    override fun getAllHabits(): Flow<List<HabitEntity>> = habitDao.getAll()
+        .map { it.map { value -> value.toEntity() } }
 
-    fun getHabitByUid(uid: String?): LiveData<Habit?> = habitDao.getByUid(uid)
+    override fun getHabitByUid(uid: String?): Flow<HabitEntity?> = habitDao.getByUid(uid)
+        .map { it?.toEntity() }
 
     companion object {
 

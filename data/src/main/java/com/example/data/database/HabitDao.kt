@@ -2,16 +2,17 @@ package com.example.data.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.data.model.Habit
+import com.example.data.models.Habit
+import kotlinx.coroutines.flow.Flow
 
 
 @Dao
 interface HabitDao {
     @Query("SELECT * FROM habit")
-    fun getAll(): LiveData<List<Habit>>
+    fun getAll(): Flow<List<Habit>>
 
     @Query("SELECT * FROM habit WHERE uid=:uid")
-    fun getByUid(uid: String?): LiveData<Habit?>
+    fun getByUid(uid: String?): Flow<Habit?>
 
     @Insert
     fun insert(habit: Habit)

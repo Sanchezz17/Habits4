@@ -6,7 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.habits4.R
-import com.example.data.model.Habit
+import com.example.data.models.Habit
+import com.example.domain.entities.HabitEntity
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.fragment_habits.view.*
 import java.text.SimpleDateFormat
@@ -14,8 +15,8 @@ import java.util.*
 
 
 class HabitsRecycleViewAdapter(
-    private var habits: List<Habit>, private val onItemClickListener: (Habit) -> Unit,
-    private val onLongItemClickListener: (View, Habit) -> Boolean
+    private var habits: List<HabitEntity>, private val onItemClickListener: (HabitEntity) -> Unit,
+    private val onLongItemClickListener: (View, HabitEntity) -> Boolean
 ) : RecyclerView.Adapter<HabitsRecycleViewAdapter.ViewHolder>() {
 
     class ViewHolder(
@@ -25,36 +26,36 @@ class HabitsRecycleViewAdapter(
         private val simpleDateFormat = SimpleDateFormat("HH:mm  dd.MM.yyyy ", Locale.ROOT)
 
         fun bind(
-            habit: Habit, onItemClickListener: (Habit) -> Unit,
-            onLongItemClickListener: (View, Habit) -> Boolean
+            habitEntity: HabitEntity, onItemClickListener: (HabitEntity) -> Unit,
+            onLongItemClickListener: (View, HabitEntity) -> Boolean
         ) {
-            containerView.habitTitle.text = habit.title
-            containerView.habitDescription.text = habit.description
+            containerView.habitTitle.text = habitEntity.title
+            containerView.habitDescription.text = habitEntity.description
             containerView.habitPriority.text =
-                containerView.context.getString(R.string.priority_placeholder, habit.priority.title)
+                containerView.context.getString(R.string.priority_placeholder, habitEntity.priority.title)
             containerView.habitCount.text =
                 containerView.context.resources.getQuantityString(
                     R.plurals.run_amount_placeholder,
-                    habit.count,
-                    habit.count
+                    habitEntity.count,
+                    habitEntity.count
                 )
             containerView.habitFrequency.text =
                 containerView.context.resources.getQuantityString(
                     R.plurals.periodicity_placeholder,
-                    habit.frequency,
-                    habit.frequency
+                    habitEntity.frequency,
+                    habitEntity.frequency
                 )
-            containerView.habitEditDate.text = simpleDateFormat.format(Date(habit.date))
-            containerView.habitColor.setBackgroundColor(habit.color)
+            containerView.habitEditDate.text = simpleDateFormat.format(Date(habitEntity.date))
+            containerView.habitColor.setBackgroundColor(habitEntity.color)
             containerView.habitColorRGB.text =
                 containerView.context.getString(
                     R.string.rgb_placeholder,
-                    Color.red(habit.color),
-                    Color.green(habit.color),
-                    Color.blue(habit.color)
+                    Color.red(habitEntity.color),
+                    Color.green(habitEntity.color),
+                    Color.blue(habitEntity.color)
                 )
             val hsv = floatArrayOf(0f, 0f, 0f)
-            Color.colorToHSV(habit.color, hsv)
+            Color.colorToHSV(habitEntity.color, hsv)
             containerView.habitColorHSV.text =
                 containerView.context.getString(
                     R.string.hsv_placeholder,
@@ -62,8 +63,8 @@ class HabitsRecycleViewAdapter(
                     hsv[1].toInt(),
                     hsv[2].toInt()
                 )
-            containerView.setOnClickListener { onItemClickListener(habit) }
-            containerView.setOnLongClickListener { onLongItemClickListener(it, habit) }
+            containerView.setOnClickListener { onItemClickListener(habitEntity) }
+            containerView.setOnLongClickListener { onLongItemClickListener(it, habitEntity) }
         }
     }
 
@@ -79,7 +80,7 @@ class HabitsRecycleViewAdapter(
         holder.bind(habits[position], onItemClickListener, onLongItemClickListener)
     }
 
-    fun setHabits(newHabits: List<Habit>) {
+    fun setHabits(newHabits: List<HabitEntity>) {
         habits = newHabits
         notifyDataSetChanged()
     }

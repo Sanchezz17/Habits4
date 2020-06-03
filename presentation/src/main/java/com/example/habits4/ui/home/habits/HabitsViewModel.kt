@@ -3,18 +3,19 @@ package com.example.habits4.ui.home.habits
 import androidx.lifecycle.*
 import androidx.lifecycle.Observer
 import com.example.habits4.App
-import com.example.data.model.Habit
-import com.example.data.repositories.HabitsRepository
+import com.example.data.models.Habit
+import com.example.data.repositories.HabitsRepositoryImpl
+import com.example.domain.entities.HabitEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 
 
-class HabitsViewModel(private val habitsRepository: HabitsRepository = App.habitsRepository) : ViewModel() {
-    private val allHabits: LiveData<List<Habit>> = habitsRepository.getAllHabits()
+class HabitsViewModel(private val habitsRepository: HabitsRepositoryImpl = App.habitsRepository) : ViewModel() {
+    private val allHabits: LiveData<List<HabitEntity>> = habitsRepository.getAllHabits().asLiveData()
 
     val nameFilterSubstring: MutableLiveData<String> = MutableLiveData()
-    val habits: MediatorLiveData<List<Habit>> = MediatorLiveData()
+    val habits: MediatorLiveData<List<HabitEntity>> = MediatorLiveData()
 
     init {
         habits.addSource(allHabits, Observer { newHabits ->
@@ -32,7 +33,7 @@ class HabitsViewModel(private val habitsRepository: HabitsRepository = App.habit
     }
 
     private fun filterHabitsByName(
-        habit: Habit,
+        habit: HabitEntity,
         newNameFilterSubstring: String? = nameFilterSubstring.value
     ): Boolean {
         return newNameFilterSubstring.isNullOrEmpty() ||
@@ -47,7 +48,7 @@ class HabitsViewModel(private val habitsRepository: HabitsRepository = App.habit
         habits.value = habits.value?.sortedByDescending { it.date }
     }
 
-    fun deleteHabit(habit: Habit) = viewModelScope.launch(Dispatchers.Default) {
-        habitsRepository.deleteHabit(habit)
+    fun deleteHabit(habitEntity: HabitEntity) = viewModelScope.launch(Dispatchers.Default) {
+        habitsRepository.deleteHabit(habitEntity)
     }
 }

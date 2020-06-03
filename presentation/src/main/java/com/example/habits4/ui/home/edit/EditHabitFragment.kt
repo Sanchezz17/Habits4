@@ -12,12 +12,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.example.domain.entities.HabitEntity
 import com.example.habits4.infrastructure.getHueGradient
-import com.example.data.model.Habit
 import com.example.habits4.R
 import com.example.habits4.infrastructure.hideKeyboard
-import com.example.domain.enums.HabitPriority
-import com.example.domain.enums.HabitType
+import com.example.domain.entities.enums.HabitPriority
+import com.example.domain.entities.enums.HabitType
 import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.fragment_edit_habit.*
 import java.util.*
@@ -129,21 +129,21 @@ class EditHabitFragment : Fragment() {
         }
     }
 
-    private fun restoreHabitState(habit: Habit) {
-        newTitle.setText(habit.title)
-        newDescription.setText(habit.description)
-        newPriority.setSelection(habit.priority.value)
+    private fun restoreHabitState(habitEntity: HabitEntity) {
+        newTitle.setText(habitEntity.title)
+        newDescription.setText(habitEntity.description)
+        newPriority.setSelection(habitEntity.priority.value)
 
         val typeViews = arrayListOf<View>()
-        newType.findViewsWithText(typeViews, habit.type.title, View.FIND_VIEWS_WITH_TEXT)
+        newType.findViewsWithText(typeViews, habitEntity.type.title, View.FIND_VIEWS_WITH_TEXT)
         if (typeViews.size > 0) {
             newType.check(typeViews[0].id)
         }
 
-        newCount.setText(habit.count.toString())
-        newFrequency.setText(habit.frequency.toString())
+        newCount.setText(habitEntity.count.toString())
+        newFrequency.setText(habitEntity.frequency.toString())
 
-        habitColor = habit.color
+        habitColor = habitEntity.color
         val rectSize = resources.getDimension(R.dimen.rect_size).toInt()
         habitRect = colorRectangles.find {
             it.background.toBitmap(rectSize, rectSize)
@@ -178,7 +178,7 @@ class EditHabitFragment : Fragment() {
             return
         }
 
-        val resultHabit = Habit(
+        val resultHabitEntity = HabitEntity(
             newTitle.text.toString(),
             newDescription.text.toString(),
             HabitPriority.getByTitle(newPriority.selectedItem.toString()),
@@ -191,9 +191,9 @@ class EditHabitFragment : Fragment() {
             Date().time
         )
 
-        resultHabit.uid = habitUid
+        resultHabitEntity.uid = habitUid
 
-        viewModel.saveHabit(resultHabit)
+        viewModel.saveHabit(resultHabitEntity)
 
         hideKeyboard()
 

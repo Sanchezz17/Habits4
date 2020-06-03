@@ -13,7 +13,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.habits4.R
 import com.example.habits4.ui.home.HomeFragmentDirections
-import com.example.data.model.Habit
+import com.example.data.models.Habit
+import com.example.domain.entities.HabitEntity
 import com.example.habits4.ui.home.habits.HabitsViewModel
 import kotlinx.android.synthetic.main.fragment_habits_list.*
 
@@ -69,17 +70,17 @@ class HabitsFragment : Fragment() {
         }
     }
 
-    private fun onHabitClick(habit: Habit) {
-        val action = HomeFragmentDirections.actionHabitsFragmentToEditHabitFragment(habit.uid)
+    private fun onHabitClick(habitEntity: HabitEntity) {
+        val action = HomeFragmentDirections.actionHabitsFragmentToEditHabitFragment(habitEntity.uid)
         findNavController().navigate(action)
     }
 
-    private fun onLongHabitClick(view: View, habit: Habit): Boolean {
+    private fun onLongHabitClick(view: View, habitEntity: HabitEntity): Boolean {
         val popupMenu = PopupMenu(context, view)
         popupMenu.inflate(R.menu.habit_long_click_menu)
         popupMenu.setOnMenuItemClickListener { item ->
             when (item.itemId) {
-                R.id.delete_habit -> viewModel.deleteHabit(habit)
+                R.id.delete_habit -> viewModel.deleteHabit(habitEntity)
             }
             true
         }

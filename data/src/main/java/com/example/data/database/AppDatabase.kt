@@ -2,7 +2,7 @@ package com.example.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.example.data.model.Habit
+import com.example.data.models.Habit
 
 
 @Database(entities = [Habit::class], version = 4)
