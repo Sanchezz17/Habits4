@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.habits4.R
-import com.example.data.models.Habit
 import com.example.domain.entities.HabitEntity
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.fragment_habits.view.*

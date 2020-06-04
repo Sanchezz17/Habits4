@@ -2,17 +2,23 @@ package com.example.habits4.ui.home.habits
 
 import androidx.lifecycle.*
 import androidx.lifecycle.Observer
-import com.example.habits4.App
-import com.example.data.models.Habit
-import com.example.data.repositories.HabitsRepositoryImpl
 import com.example.domain.entities.HabitEntity
+import com.example.domain.useCases.DeleteHabitUseCase
+import com.example.domain.useCases.GetAllHabitsUseCase
+import com.example.domain.useCases.InitializeHabitsInDbUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
+import javax.inject.Inject
 
 
-class HabitsViewModel(private val habitsRepository: HabitsRepositoryImpl = App.habitsRepository) : ViewModel() {
-    private val allHabits: LiveData<List<HabitEntity>> = habitsRepository.getAllHabits().asLiveData()
+class HabitsViewModel @Inject constructor(
+    private val getAllHabitsUseCase: GetAllHabitsUseCase,
+    private val initializeHabitsInDbUseCase: InitializeHabitsInDbUseCase,
+    private val deleteHabitUseCase: DeleteHabitUseCase
+): ViewModel() {
+
+    private val allHabits: LiveData<List<HabitEntity>> = getAllHabitsUseCase.getAllHabits().asLiveData()
 
     val nameFilterSubstring: MutableLiveData<String> = MutableLiveData()
     val habits: MediatorLiveData<List<HabitEntity>> = MediatorLiveData()
@@ -28,7 +34,7 @@ class HabitsViewModel(private val habitsRepository: HabitsRepositoryImpl = App.h
         })
 
         viewModelScope.launch(Dispatchers.Default) {
-            habitsRepository.initializeHabitsInDB()
+            initializeHabitsInDbUseCase.initializeHabitsInDB()
         }
     }
 
@@ -49,6 +55,6 @@ class HabitsViewModel(private val habitsRepository: HabitsRepositoryImpl = App.h
     }
 
     fun deleteHabit(habitEntity: HabitEntity) = viewModelScope.launch(Dispatchers.Default) {
-        habitsRepository.deleteHabit(habitEntity)
+        deleteHabitUseCase.deleteHabit(habitEntity)
     }
 }

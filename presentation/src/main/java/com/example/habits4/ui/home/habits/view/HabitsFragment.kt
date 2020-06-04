@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.habits4.R
 import com.example.habits4.ui.home.HomeFragmentDirections
-import com.example.data.models.Habit
 import com.example.domain.entities.HabitEntity
 import com.example.habits4.ui.home.habits.HabitsViewModel
 import kotlinx.android.synthetic.main.fragment_habits_list.*

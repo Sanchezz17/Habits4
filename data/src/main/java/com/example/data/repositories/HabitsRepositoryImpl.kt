@@ -2,6 +2,7 @@ package com.example.data.repositories
 
 import android.util.Log
 import androidx.lifecycle.asLiveData
+import com.example.data.database.HabitDao
 import com.example.data.mappers.toEntity
 import com.example.data.mappers.toModel
 import com.example.data.network.HabitApi
@@ -18,7 +19,7 @@ import java.lang.Exception
 
 
 class HabitsRepositoryImpl(
-    private val habitDao: com.example.data.database.HabitDao,
+    private val habitDao: HabitDao,
     private val habitApi: HabitApi
 ) : HabitsRepository {
 

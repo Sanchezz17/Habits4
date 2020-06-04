@@ -4,20 +4,24 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.habits4.App
-import com.example.data.models.Habit
-import com.example.data.repositories.HabitsRepositoryImpl
 import com.example.domain.entities.HabitEntity
+import com.example.domain.useCases.AddOrUpdateHabitUseCase
+import com.example.domain.useCases.GetHabitByUidUseCase
 import kotlinx.coroutines.*
+import javax.inject.Inject
 
 
-class EditHabitViewModel(
-    habitUid: String?,
-    private val habitsRepository: HabitsRepositoryImpl = App.habitsRepository
-) : ViewModel() {
-    val habit: LiveData<HabitEntity?> = habitsRepository.getHabitByUid(habitUid).asLiveData()
+class EditHabitViewModel (habitUid: String?) : ViewModel() {
+
+    @Inject
+    lateinit var getHabitByUidUseCase: GetHabitByUidUseCase
+
+    @Inject
+    lateinit var addOrUpdateHabitUseCase: AddOrUpdateHabitUseCase
+
+    val habit: LiveData<HabitEntity?> = getHabitByUidUseCase.getHabitByUid(habitUid).asLiveData()
 
     fun saveHabit(habitEntity: HabitEntity) = viewModelScope.launch(Dispatchers.Default) {
-        habitsRepository.addOrUpdateHabit(habitEntity)
+        addOrUpdateHabitUseCase.addOrUpdateHabit(habitEntity)
     }
 }
